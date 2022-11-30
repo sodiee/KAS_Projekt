@@ -27,6 +27,7 @@ public class TilmeldTab extends GridPane {
     private TextField txfDeltagerNavn, txfAdresse, txfByLand, txfTlfNummer, txfAnkomstdato, txfAfrejsedato, txfFirmaNavn, txfFirmaTlfNummer;
     private ComboBox<ArrayList<Conference>> conferenceBox;
     private ComboBox<ArrayList<Hotel>> hotelBox;
+    private Button btnTilmeld;
     public TilmeldTab() {
         this.setPadding(new Insets(20));
         this.setHgap(20);
@@ -56,24 +57,24 @@ public class TilmeldTab extends GridPane {
         txfAdresse = new TextField();
         txfByLand = new TextField();
         txfTlfNummer = new TextField();
-        txfAnkomstdato = new TextField("DD / måned i String / år");
+        txfAnkomstdato = new TextField("Eks. 18 november 2023");
         txfAfrejsedato = new TextField();
         txfFirmaNavn = new TextField();
         txfFirmaTlfNummer = new TextField();
 
 
         participantPane.add(txfDeltagerNavn, 1, 2);
-        txfDeltagerNavn.setOnKeyTyped(event -> checkNavn());
+        txfDeltagerNavn.setOnAction(event -> checkNavn());
         participantPane.add(txfAdresse, 1, 3);
-        txfAdresse.setOnKeyTyped(event -> checkAdresse());
+        txfAdresse.setOnAction(event -> checkAdresse());
         participantPane.add(txfByLand, 1, 4);
-        txfByLand.setOnKeyTyped(event -> checkLand());
+        txfByLand.setOnAction(event -> checkLand());
         participantPane.add(txfTlfNummer, 1, 5);
-        txfTlfNummer.setOnKeyTyped(event -> checkTlf());
+        txfTlfNummer.setOnAction(event -> checkTlf());
         participantPane.add(txfAnkomstdato, 1, 6);
-        txfAnkomstdato.setOnKeyTyped(event -> checkAnkomst());
+        txfAnkomstdato.setOnAction(event -> checkAnkomst());
         participantPane.add(txfAfrejsedato, 1, 7);
-        txfAfrejsedato.setOnKeyTyped(event -> checkAfrejse());
+        txfAfrejsedato.setOnAction(event -> checkAfrejse());
         participantPane.add(txfFirmaNavn, 1, 8);
         participantPane.add(txfFirmaTlfNummer, 1, 9);
 
@@ -85,7 +86,7 @@ public class TilmeldTab extends GridPane {
         participantPane.add(lblNavn, 0, 2);
         Label lblAdresse = new Label("Adresse:");
         participantPane.add(lblAdresse, 0, 3);
-        Label lblByLand = new Label("By/Land:");
+        Label lblByLand = new Label("Land:");
         participantPane.add(lblByLand, 0, 4);
         Label lblTlfNummer = new Label("Tlf.nummer:");
         participantPane.add(lblTlfNummer, 0, 5);
@@ -179,7 +180,7 @@ public class TilmeldTab extends GridPane {
         txfSamletPris.setEditable(false);
         finalPane.add(txfSamletPris, 0, 0);
 
-        Button btnTilmeld = new Button("Tilmeld");
+        btnTilmeld = new Button("Tilmeld");
         finalPane.add(btnTilmeld, 1, 0);
         btnTilmeld.setStyle("-fx-background-color: limegreen");
         btnTilmeld.setOnAction(event -> tilmeldAction());
@@ -224,35 +225,37 @@ public class TilmeldTab extends GridPane {
 
 
     // -------------------------------------------------------------------------
+
     private void checkAdresse() {
-        if (txfDeltagerNavn.getText().isEmpty()) {
+        System.out.println("hhh");
+        if (txfAdresse.getText().isEmpty()) {
             Alert a = new Alert(Alert.AlertType.INFORMATION);
-            a.setContentText("Indtast et navn");
+            a.setContentText("Indtast en adresse");
             a.showAndWait();
             txfTlfNummer.setText("");
         } else {;}
     }
     private void checkLand() {
-        if (txfDeltagerNavn.getText().isEmpty()) {
+        if (txfByLand.getText().isEmpty()) {
             Alert a = new Alert(Alert.AlertType.INFORMATION);
-            a.setContentText("Indtast et navn");
+            a.setContentText("Indtast et land");
             a.showAndWait();
             txfTlfNummer.setText("");
         } else {;}
     }
     private void checkAnkomst() {
-        if (txfDeltagerNavn.getText().isEmpty()) {
+        if (txfAnkomstdato.getText().isEmpty()) {
             Alert a = new Alert(Alert.AlertType.INFORMATION);
-            a.setContentText("Indtast et navn");
+            a.setContentText("Indtast en dato");
             a.showAndWait();
             txfTlfNummer.setText("");
         } else {;}
     }
 
     private void checkAfrejse() {
-        if (txfDeltagerNavn.getText().isEmpty()) {
+        if (txfAfrejsedato.getText().isEmpty()) {
             Alert a = new Alert(Alert.AlertType.INFORMATION);
-            a.setContentText("Indtast et navn");
+            a.setContentText("Indtast en dato");
             a.showAndWait();
             txfTlfNummer.setText("");
         } else {;}
@@ -270,7 +273,7 @@ public class TilmeldTab extends GridPane {
         var s = txfTlfNummer.getText();
         for (var ch : s.toCharArray()){
             if ('0' <= ch && ch <= '9')
-            {}
+            {;}
             else
             {
                 Alert a = new Alert(Alert.AlertType.INFORMATION);
@@ -293,12 +296,20 @@ public class TilmeldTab extends GridPane {
     }
 
     public void tilmeldAction(){
+        checkNavn();
+        checkTlf();
+        checkAdresse();
+        checkAfrejse();
+        checkAnkomst();
+        checkLand();
         Participant p = new Participant(txfDeltagerNavn.getText(), txfAdresse.getText(), txfByLand.getText(), Integer.parseInt(txfTlfNummer.getText()));
         var idxConf = conferenceBox.getSelectionModel().getSelectedIndex();
         var conf = Controller.getConferences().get(idxConf);
         var idxHot = hotelBox.getSelectionModel().getSelectedIndex();
         var hot = Controller.getHotels().get(idxHot);
-       Controller.createConferenceParticipantData(conf, p, hot, null, tglLecture.getSelectedToggle().isSelected(), 3); //((Integer.parseInt(txfAfrejsedato.getText()) - Integer.parseInt(txfAnkomstdato.getText())) + 1));
+        Controller.createConferenceParticipantData(conf, p, hot, null, tglLecture.getSelectedToggle().isSelected(), 3); //((Integer.parseInt(txfAfrejsedato.getText()) - Integer.parseInt(txfAnkomstdato.getText())) + 1));
+        Controller.addToConferenceAndCreateCPD(p, Controller.getConferences().get(idxConf));
+        System.out.println(Controller.getListOfParticipant(Controller.getConferences().get(idxConf)));
     }
 }
 

@@ -42,7 +42,5 @@ public class AdminTab extends GridPane {
         conferenceDeltagere = new TextArea();
         conferenceDeltagere.setText("N");
         adminPane.add(conferenceDeltagere, 1, 1);
-
-        TextField h = new TextField();
     }
 }
