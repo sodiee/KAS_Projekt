@@ -151,6 +151,18 @@ public class Controller {
         return hotel.createHotelExtraChoices(name, price);
     }
 
+    public static ArrayList<CompanionActivity> getActivitylist(){
+        return Storage.getActivities();
+    }
+
+    public static ArrayList<Companion> getCompanions(){
+        return Storage.getCompanion();
+    }
+
+    public static ArrayList<Companion> getCompanionsAtActivity(CompanionActivity companionActivity){
+        return companionActivity.getCompanionAtActivity();
+    }
+
     /**
      * Initializes the storage with some objects.
      */
@@ -173,7 +185,9 @@ public class Controller {
         denHvideSvane.addParticipantToHotel(nielsPetersen);
 
         CompanionActivity egeskov = new CompanionActivity("Egeskov", "Egeskov slot", 75, "19/5-2022");
+        Storage.addActivities(egeskov);
         CompanionActivity trapholt = new CompanionActivity("Trapholt Museum", "Kolding", 200, "20/5.2022");
+        Storage.addActivities(trapholt);
         Participant peterSommer = new Participant("Peter Sommer", "Randervej 5", "Denmark", 48197528);
         Storage.addParticipant(peterSommer);
         denHvideSvane.addParticipantToHotel(peterSommer);
@@ -181,8 +195,8 @@ public class Controller {
         Storage.addCompanion(mieSommer);
         Controller.createConferenceParticipantData(havOgHimmel, peterSommer, denHvideSvane, mieSommer, false, 3);
         Controller.createHotelExtraChoices("Wifi", 50, denHvideSvane);
-        mieSommer.addCompanionActivity(egeskov);
-        mieSommer.addCompanionActivity(trapholt);
+        egeskov.addCompanionToActivity(mieSommer);
+        trapholt.addCompanionToActivity(mieSommer);
         Controller.createConferenceParticipantData(havOgHimmel, peterSommer, denHvideSvane, mieSommer, false, 3);
 
 
@@ -193,8 +207,8 @@ public class Controller {
         Storage.addCompanion(janMadsen);
         Controller.createHotelExtraChoices("Wifi", 50, denHvideSvane);
         CompanionActivity byrundtur = new CompanionActivity("Byrundtur", "Odense", 125, "18/5-2022");
-        janMadsen.addCompanionActivity(egeskov);
-        janMadsen.addCompanionActivity(byrundtur);
+        egeskov.addCompanionToActivity(janMadsen);
+        byrundtur.addCompanionToActivity(janMadsen);
         Controller.createConferenceParticipantData(havOgHimmel, loneJensen, denHvideSvane, janMadsen, true, 3);
     }
 

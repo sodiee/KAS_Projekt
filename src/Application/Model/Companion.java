@@ -30,4 +30,8 @@ public class Companion extends APerson{
             totalPriceOfActivities += activity.getActivityPrice();
         }
         return totalPriceOfActivities;}
+
+    public String toString(){
+        return super.getName();
+    }
 }

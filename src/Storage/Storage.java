@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 public class Storage {
     private static ArrayList<Participant> participants = new ArrayList<>();
+
+    private static ArrayList<CompanionActivity> activities = new ArrayList<>();
     private static ArrayList<Companion> companions = new ArrayList<>();
     private static ArrayList<Hotel> hotels = new ArrayList<>();
     private static ArrayList<Conference> conferences = new ArrayList<>();
@@ -53,6 +55,11 @@ public class Storage {
     public static void addConference(Conference conference) {conferences.add(conference);}
 
     public static void removeConference(Conference conference) {conferences.remove(conference);}
+
+    // -------------------------------------------------------------------------
+
+    public static ArrayList<CompanionActivity> getActivities() {return activities;}
+    public static void addActivities(CompanionActivity companionActivity) {activities.add(companionActivity);}
 
     // -------------------------------------------------------------------------
 }

@@ -1,46 +1,33 @@
 package Application.Model;
 
+import java.util.ArrayList;
+
 public class CompanionActivity {
     private String activityName;
     private String activityLocation;
     private int activityPrice;
     private String activityDate;
+    private ArrayList<Companion> registeredCompanions;
 
     public CompanionActivity(String activityName, String activityLocation, int activityPrice, String activityDate) {
         this.activityName = activityName;
         this.activityLocation = activityLocation;
         this.activityPrice = activityPrice;
         this.activityDate = activityDate;
+        registeredCompanions = new ArrayList<>();
     }
-    public String getActivityName() {
-        return activityName;
-    }
-
-    public void setActivityName(String activityName) {
-        this.activityName = activityName;
-    }
-
-    public String getActivityLocation() {
-        return activityLocation;
-    }
-
-    public void setActivityLocation(String activityLocation) {
-        this.activityLocation = activityLocation;
-    }
-
     public int getActivityPrice() {
         return activityPrice;
     }
 
-    public void setActivityPrice(int activityPrice) {
-        this.activityPrice = activityPrice;
+    public void addCompanionToActivity(Companion companion) {
+        registeredCompanions.add(companion);
     }
 
-    public String getActivityDate() {
-        return activityDate;
+    public ArrayList<Companion> getCompanionAtActivity(){
+        return registeredCompanions;
     }
-
-    public void setActivityDate(String activityDate) {
-        this.activityDate = activityDate;
+    public String toString(){
+        return activityName;
     }
 }
