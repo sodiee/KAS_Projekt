@@ -65,10 +65,15 @@ public class TilmeldTab extends GridPane {
         participantPane.add(txfDeltagerNavn, 1, 2);
         txfDeltagerNavn.setOnKeyTyped(event -> checkNavn());
         participantPane.add(txfAdresse, 1, 3);
+        txfAdresse.setOnKeyTyped(event -> checkAdresse());
         participantPane.add(txfByLand, 1, 4);
+        txfByLand.setOnKeyTyped(event -> checkLand());
         participantPane.add(txfTlfNummer, 1, 5);
+        txfTlfNummer.setOnKeyTyped(event -> checkTlf());
         participantPane.add(txfAnkomstdato, 1, 6);
+        txfAnkomstdato.setOnKeyTyped(event -> checkAnkomst());
         participantPane.add(txfAfrejsedato, 1, 7);
+        txfAfrejsedato.setOnKeyTyped(event -> checkAfrejse());
         participantPane.add(txfFirmaNavn, 1, 8);
         participantPane.add(txfFirmaTlfNummer, 1, 9);
 
@@ -144,7 +149,6 @@ public class TilmeldTab extends GridPane {
         TextField txfLedsagerAdresse = new TextField();
         TextField txfLedsagerByLand = new TextField();
         TextField txfLedsagerTlf = new TextField();
-        txfTlfNummer.setOnKeyTyped(event -> checkTlf());
 
 
         companionPane.add(txfLedsagerNavn, 1, 1);
@@ -218,6 +222,42 @@ public class TilmeldTab extends GridPane {
         companionPane.add(lblTrapBeskriv, 0,17);
     }
 
+
+    // -------------------------------------------------------------------------
+    private void checkAdresse() {
+        if (txfDeltagerNavn.getText().isEmpty()) {
+            Alert a = new Alert(Alert.AlertType.INFORMATION);
+            a.setContentText("Indtast et navn");
+            a.showAndWait();
+            txfTlfNummer.setText("");
+        } else {;}
+    }
+    private void checkLand() {
+        if (txfDeltagerNavn.getText().isEmpty()) {
+            Alert a = new Alert(Alert.AlertType.INFORMATION);
+            a.setContentText("Indtast et navn");
+            a.showAndWait();
+            txfTlfNummer.setText("");
+        } else {;}
+    }
+    private void checkAnkomst() {
+        if (txfDeltagerNavn.getText().isEmpty()) {
+            Alert a = new Alert(Alert.AlertType.INFORMATION);
+            a.setContentText("Indtast et navn");
+            a.showAndWait();
+            txfTlfNummer.setText("");
+        } else {;}
+    }
+
+    private void checkAfrejse() {
+        if (txfDeltagerNavn.getText().isEmpty()) {
+            Alert a = new Alert(Alert.AlertType.INFORMATION);
+            a.setContentText("Indtast et navn");
+            a.showAndWait();
+            txfTlfNummer.setText("");
+        } else {;}
+    }
+
     private void checkNavn() {
         if (txfDeltagerNavn.getText().isEmpty()) {
             Alert a = new Alert(Alert.AlertType.INFORMATION);
@@ -225,11 +265,7 @@ public class TilmeldTab extends GridPane {
             a.showAndWait();
             txfTlfNummer.setText("");
         } else {;}
-        //hej din knallert
     }
-
-
-    // -------------------------------------------------------------------------
     private void checkTlf() {
         var s = txfTlfNummer.getText();
         for (var ch : s.toCharArray()){
