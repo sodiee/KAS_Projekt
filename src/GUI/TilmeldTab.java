@@ -52,7 +52,6 @@ public class TilmeldTab extends GridPane {
         conferenceBox.getItems().add(Controller.getConferences());
         participantPane.add(conferenceBox, 1, 1);
 
-
         txfDeltagerNavn = new TextField();
         txfAdresse = new TextField();
         txfByLand = new TextField();
@@ -64,6 +63,7 @@ public class TilmeldTab extends GridPane {
 
 
         participantPane.add(txfDeltagerNavn, 1, 2);
+        txfDeltagerNavn.setOnKeyTyped(event -> checkNavn());
         participantPane.add(txfAdresse, 1, 3);
         participantPane.add(txfByLand, 1, 4);
         participantPane.add(txfTlfNummer, 1, 5);
@@ -218,8 +218,14 @@ public class TilmeldTab extends GridPane {
         companionPane.add(lblTrapBeskriv, 0,17);
     }
 
-
-
+    private void checkNavn() {
+        if (txfDeltagerNavn.getText().isEmpty()) {
+            Alert a = new Alert(Alert.AlertType.INFORMATION);
+            a.setContentText("Indtast et navn");
+            a.showAndWait();
+            txfTlfNummer.setText("");
+        } else {;}
+    }
 
 
     // -------------------------------------------------------------------------
