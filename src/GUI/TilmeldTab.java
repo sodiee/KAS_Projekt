@@ -225,7 +225,6 @@ public class TilmeldTab extends GridPane {
             a.showAndWait();
             txfTlfNummer.setText("");
         } else {;}
-        //hej din knallert
     }
 
 
