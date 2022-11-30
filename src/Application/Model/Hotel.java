@@ -7,14 +7,14 @@ public class Hotel {
     private int daysRent;
     private ArrayList<HotelExtraChoices> extraChoices;
     private HotelExtraChoices hotelExtraChoices;
-    private ArrayList<Participant> hRooms;
+    private ArrayList<Participant> participantsInHotel;
     private double priceSingle;
     private double priceDouble;
 
     public Hotel(String hotelName, double priceSingle, double priceDouble) {
         this.hotelName = hotelName;
         this.extraChoices = new ArrayList<>();
-        this.hRooms = new ArrayList<>();
+        this.participantsInHotel = new ArrayList<>();
         this.priceSingle = priceSingle;
         this.priceDouble = priceDouble;
     }
@@ -25,7 +25,7 @@ public class Hotel {
     }
 
     public void registerParticipantToRoom(Participant participant){
-        hRooms.add(participant);
+        participantsInHotel.add(participant);
     }
 
     public String getHotelName() {
@@ -60,12 +60,19 @@ public class Hotel {
         this.hotelExtraChoices = hotelExtraChoices;
     }
 
-    public ArrayList<Participant> gethRooms() {
-        return hRooms;
+    public void addParticipantToHotel(Participant participant){
+        participantsInHotel.add(participant);
+    }
+    public ArrayList<Participant> getParticipantsInHotel() {
+        return participantsInHotel;
     }
 
-    public void sethRooms(ArrayList<Participant> hRooms) {
-        this.hRooms = hRooms;
+    public void setParticipantsInHotel(ArrayList<Participant> participantsInHotel) {
+        this.participantsInHotel = participantsInHotel;
+    }
+
+    public void remove(Participant participant) {
+        participantsInHotel.remove(participant);
     }
 
     public double getPriceSingle() {

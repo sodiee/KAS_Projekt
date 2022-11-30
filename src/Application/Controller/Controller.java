@@ -49,8 +49,13 @@ public class Controller {
      * @return
      */
     public static void createConferenceParticipantData(Conference conference, Participant participant, Hotel hotel, Companion companion, boolean lecturer, int daysAtConference){
-        if (conference.getListOfParticipants().contains(participant)) {
+        if (!conference.getListOfParticipants().contains(participant)) {
             ConferenceParticipantData conferenceParticipantData = new ConferenceParticipantData(conference, participant, hotel, companion, lecturer, daysAtConference);
+            if (hotel == null) {
+
+            } else {
+                hotel.addParticipantToHotel(participant);
+            }
         }
     }
 
@@ -82,7 +87,7 @@ public class Controller {
      * @param participant
      * @param conference
      */
-    public static void addToConferenceAndCreateCPD(Participant participant, Conference conference) {
+    public static void addToConference(Participant participant, Conference conference) {
         conference.addParticipantToConference(participant);
     }
 
@@ -92,19 +97,6 @@ public class Controller {
      * @return
      */
     public static ArrayList<Participant> getListOfParticipant(Conference conference){return conference.getListOfParticipants();}
-
-    /**
-     * Creates a companion
-     * @param name
-     * @param address
-     * @param country
-     * @param phoneNumber
-     * @return companion
-     */
-    public static Companion createCompanion(String name, String address, String country, int phoneNumber){
-        Companion companion = new Companion(name, address, country, phoneNumber);
-        return companion;
-    }
 
     /**
      * Registers a companion to it's related participant.
@@ -136,8 +128,16 @@ public class Controller {
         return hotel;
     }
 
+    /**
+     * returns a list of all created hotels
+     * @return
+     */
     public static ArrayList<Hotel> getHotels(){
         return Storage.getHotel();
+    }
+
+    public static ArrayList<Participant> getListofParticipantsInHotel(Hotel hotel){
+        return hotel.getParticipantsInHotel();
     }
 
     /**
@@ -165,15 +165,18 @@ public class Controller {
 
         Hotel denHvideSvane = new Hotel("Den Hvide Svane", 1050, 1200);
         Storage.addHotel(denHvideSvane);
+        havOgHimmel.getListOfHotels().add(denHvideSvane);
 
         Participant nielsPetersen = new Participant("Niels Petersen", "Århusvej 20", "Denmark", 39184910);
         Controller.createConferenceParticipantData(havOgHimmel, nielsPetersen, denHvideSvane, null, false, 3);
         Storage.addParticipant(nielsPetersen);
+        denHvideSvane.addParticipantToHotel(nielsPetersen);
 
         CompanionActivity egeskov = new CompanionActivity("Egeskov", "Egeskov slot", 75, "19/5-2022");
         CompanionActivity trapholt = new CompanionActivity("Trapholt Museum", "Kolding", 200, "20/5.2022");
         Participant peterSommer = new Participant("Peter Sommer", "Randervej 5", "Denmark", 48197528);
         Storage.addParticipant(peterSommer);
+        denHvideSvane.addParticipantToHotel(peterSommer);
         Companion mieSommer = new Companion("Mie Sommer", "Randersvej 5", "Denmark", 19378583);
         Storage.addCompanion(mieSommer);
         Controller.createConferenceParticipantData(havOgHimmel, peterSommer, denHvideSvane, mieSommer, false, 3);
@@ -185,6 +188,7 @@ public class Controller {
 
         Participant loneJensen = new Participant("Lone Jensen", "Ålborgvej 4", "Sverige", 48190347);
         Storage.addParticipant(loneJensen);
+        denHvideSvane.addParticipantToHotel(loneJensen);
         Companion janMadsen = new Companion("Jan Madsen", "Ålborgvej 4", "Sverige", 18593901);
         Storage.addCompanion(janMadsen);
         Controller.createHotelExtraChoices("Wifi", 50, denHvideSvane);

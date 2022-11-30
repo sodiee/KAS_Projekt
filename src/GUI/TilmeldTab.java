@@ -308,8 +308,17 @@ public class TilmeldTab extends GridPane {
         var idxHot = hotelBox.getSelectionModel().getSelectedIndex();
         var hot = Controller.getHotels().get(idxHot);
         Controller.createConferenceParticipantData(conf, p, hot, null, tglLecture.getSelectedToggle().isSelected(), 3); //((Integer.parseInt(txfAfrejsedato.getText()) - Integer.parseInt(txfAnkomstdato.getText())) + 1));
-        Controller.addToConferenceAndCreateCPD(p, Controller.getConferences().get(idxConf));
+        Controller.addToConference(p, Controller.getConferences().get(idxConf));
         System.out.println(Controller.getListOfParticipant(Controller.getConferences().get(idxConf)));
+    }
+
+    public Hotel chosenHotel(){
+        if (hotelBox.getSelectionModel().getSelectedIndex() == 0) {
+            return null;
+        } else {
+            var idxHot = hotelBox.getSelectionModel().getSelectedIndex();
+            return Controller.getHotels().get(idxHot);
+        }
     }
 }
 
