@@ -51,7 +51,6 @@ public class StartWindow extends Application {
 		VBox vBox = new VBox(tabPane);
 		Scene scene = new Scene(vBox);
 
-
 		pane.setCenter(tabPane);
 	}
 

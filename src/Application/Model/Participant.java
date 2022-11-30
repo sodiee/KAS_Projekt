@@ -40,4 +40,7 @@ public class Participant extends APerson {
     public void setCompanyPhoneNumber(int companyPhoneNumber) {
         this.companyPhoneNumber = companyPhoneNumber;
     }
+    public String toString(){
+        return super.getName();
+    }
 }
