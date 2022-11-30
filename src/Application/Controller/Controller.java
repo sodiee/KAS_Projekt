@@ -87,6 +87,13 @@ public class Controller {
     }
 
     /**
+     * Returns list of participants to conference.
+     * @param conference
+     * @return
+     */
+    public static ArrayList<Participant> getListOfParticipant(Conference conference){return conference.getListOfParticipants();}
+
+    /**
      * Creates a companion
      * @param name
      * @param address
