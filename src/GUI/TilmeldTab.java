@@ -52,6 +52,7 @@ public class TilmeldTab extends GridPane {
         conferenceBox.getItems().add(Controller.getConferences());
         participantPane.add(conferenceBox, 1, 1);
 
+
         txfDeltagerNavn = new TextField();
         txfAdresse = new TextField();
         txfByLand = new TextField();
@@ -217,6 +218,11 @@ public class TilmeldTab extends GridPane {
         companionPane.add(lblTrapBeskriv, 0,17);
     }
 
+
+
+
+
+    // -------------------------------------------------------------------------
     private void checkTlf() {
         var s = txfTlfNummer.getText();
         for (var ch : s.toCharArray()){
@@ -232,9 +238,6 @@ public class TilmeldTab extends GridPane {
         }
     }
 
-
-
-    // -------------------------------------------------------------------------
     public void yesButtonSelected(){
         if (rbtnCompanionYes.isSelected()) {
             companionPane.setDisable(false);
