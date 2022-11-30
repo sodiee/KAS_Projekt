@@ -31,7 +31,7 @@ public class AdminTab extends GridPane {
         this.add(lblHotelParticipants, 1, 3);
         lblActivities = new Label("Aktiviteter:");
         this.add(lblActivities, 1, 4);
-        lblCompanions = new Label("Ledsagere tilmeldt");
+        lblCompanions = new Label("Ledsagere tilmeldt:");
         this.add(lblCompanions, 3, 4);
 
         lvwConference = new ListView<>();

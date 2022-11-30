@@ -207,6 +207,7 @@ public class Controller {
         Storage.addCompanion(janMadsen);
         Controller.createHotelExtraChoices("Wifi", 50, denHvideSvane);
         CompanionActivity byrundtur = new CompanionActivity("Byrundtur", "Odense", 125, "18/5-2022");
+        Storage.addActivities(byrundtur);
         egeskov.addCompanionToActivity(janMadsen);
         byrundtur.addCompanionToActivity(janMadsen);
         Controller.createConferenceParticipantData(havOgHimmel, loneJensen, denHvideSvane, janMadsen, true, 3);
