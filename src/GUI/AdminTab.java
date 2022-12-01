@@ -16,7 +16,7 @@ public class AdminTab extends GridPane {
     private ListView<CompanionActivity> lvwActivities;
     private ListView<Companion> lvwCompanion;
     private ListView<Participant> lvwHotelParticipants, lvwConferenceDeltagere;
-    private Label lblHotelParticipants, lblConferenceDeltagere, lblHotel, lblActivities, lblCompanions;
+    private Label lblConference, lblHotelParticipants, lblConferenceDeltagere, lblHotel, lblActivities, lblCompanions;
 
     public AdminTab() {
         this.setPadding(new Insets(20));
@@ -24,16 +24,18 @@ public class AdminTab extends GridPane {
         this.setVgap(10);
         this.setGridLinesVisible(false);
         this.setStyle("-fx-border-color: black");
+        lblConference = new Label("Konference:");
+        this.add(lblConference,0,0);
         lblConferenceDeltagere = new Label("Konference deltagere:");
         this.add(lblConferenceDeltagere, 1, 1);
         lblHotel = new Label("Hoteller tilknyttet konferencen:");
         this.add(lblHotel, 1, 2);
-        lblHotelParticipants = new Label("Deltagere på hotel:");
-        this.add(lblHotelParticipants, 1, 3);
+        lblHotelParticipants = new Label("Deltagere på hotellet:");
+        this.add(lblHotelParticipants, 3, 2);
         lblActivities = new Label("Aktiviteter:");
-        this.add(lblActivities, 1, 4);
+        this.add(lblActivities, 1, 3);
         lblCompanions = new Label("Ledsagere tilmeldt:");
-        this.add(lblCompanions, 3, 4);
+        this.add(lblCompanions, 3, 3);
 
         lvwConference = new ListView<>();
         lvwConference.getItems().setAll(Controller.getConferences());
@@ -48,14 +50,14 @@ public class AdminTab extends GridPane {
         lvwHotels.getSelectionModel().selectedItemProperty().addListener((ov, oldValue, newValue) -> this.selectedHotelChanged(newValue));
 
         lvwHotelParticipants = new ListView<>();
-        this.add(lvwHotelParticipants, 2, 3);
+        this.add(lvwHotelParticipants, 4, 2);
 
         lvwActivities = new ListView<>();
-        this.add(lvwActivities, 2, 4);
+        this.add(lvwActivities, 2, 3);
         lvwActivities.getSelectionModel().selectedItemProperty().addListener((ov, oldValue, newValue) -> this.selectedActivityChanged(newValue));
 
         lvwCompanion = new ListView<>();
-        this.add(lvwCompanion, 4, 4);
+        this.add(lvwCompanion, 4, 3);
     }
 
     private void selectedActivityChanged(CompanionActivity newValue) {
