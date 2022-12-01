@@ -51,9 +51,8 @@ public class Controller {
     public static void createConferenceParticipantData(Conference conference, Participant participant, Hotel hotel, Companion companion, boolean lecturer, int daysAtConference){
         if (!conference.getListOfParticipants().contains(participant)) {
             ConferenceParticipantData conferenceParticipantData = new ConferenceParticipantData(conference, participant, hotel, companion, lecturer, daysAtConference);
-            if (hotel == null) {
-
-            } else {
+            //Controller.addParticipantToConference(participant, conference);
+            if (hotel != null) {
                 hotel.addParticipantToHotel(participant);
             }
         }
@@ -87,8 +86,12 @@ public class Controller {
      * @param participant
      * @param conference
      */
-    public static void addToConference(Participant participant, Conference conference) {
+    public static void addParticipantToConference(Participant participant, Conference conference) {
         conference.addParticipantToConference(participant);
+    }
+
+    public static void addParticipant(Participant p){
+        Storage.addParticipant(p);
     }
 
     /**
@@ -155,6 +158,7 @@ public class Controller {
         return Storage.getActivities();
     }
 
+    public static void addCompanion(Companion companion){Storage.addCompanion(companion);}
     public static ArrayList<Companion> getCompanions(){
         return Storage.getCompanion();
     }
@@ -168,21 +172,19 @@ public class Controller {
      */
     public static void initStorage() {
         Conference havOgHimmel = Controller.createConference("Odense Universitet", "18-05-2023", "20-05-2023", 1500, "Hav og Himmel");
-        Storage.addConference(havOgHimmel);
 
-        Participant finnMadsen = new Participant("Finn Madsen", "Søren Frichs Vej 51K", "Denmark", 39184617);
-        Storage.addParticipant(finnMadsen);
+        Participant finnMadsen = createParticipant("Finn Madsen", "Søren Frichs Vej 51K", "Denmark", 39184617);
+        Controller.addParticipantToConference(finnMadsen, havOgHimmel);
 
         Controller.createConferenceParticipantData(havOgHimmel, finnMadsen, null, null, false, 3);
 
         Hotel denHvideSvane = new Hotel("Den Hvide Svane", 1050, 1200);
-        Storage.addHotel(denHvideSvane);
         havOgHimmel.getListOfHotels().add(denHvideSvane);
 
         Participant nielsPetersen = new Participant("Niels Petersen", "Århusvej 20", "Denmark", 39184910);
         Controller.createConferenceParticipantData(havOgHimmel, nielsPetersen, denHvideSvane, null, false, 3);
         Storage.addParticipant(nielsPetersen);
-        denHvideSvane.addParticipantToHotel(nielsPetersen);
+        Controller.addParticipantToConference(nielsPetersen, havOgHimmel);
 
         CompanionActivity egeskov = new CompanionActivity("Egeskov", "Egeskov slot", 75, "19/5-2022");
         Storage.addActivities(egeskov);
@@ -190,10 +192,9 @@ public class Controller {
         Storage.addActivities(trapholt);
         Participant peterSommer = new Participant("Peter Sommer", "Randervej 5", "Denmark", 48197528);
         Storage.addParticipant(peterSommer);
-        denHvideSvane.addParticipantToHotel(peterSommer);
+        Controller.addParticipantToConference(peterSommer, havOgHimmel);
         Companion mieSommer = new Companion("Mie Sommer", "Randersvej 5", "Denmark", 19378583);
         Storage.addCompanion(mieSommer);
-        Controller.createConferenceParticipantData(havOgHimmel, peterSommer, denHvideSvane, mieSommer, false, 3);
         Controller.createHotelExtraChoices("Wifi", 50, denHvideSvane);
         egeskov.addCompanionToActivity(mieSommer);
         trapholt.addCompanionToActivity(mieSommer);
@@ -202,7 +203,6 @@ public class Controller {
 
         Participant loneJensen = new Participant("Lone Jensen", "Ålborgvej 4", "Sverige", 48190347);
         Storage.addParticipant(loneJensen);
-        denHvideSvane.addParticipantToHotel(loneJensen);
         Companion janMadsen = new Companion("Jan Madsen", "Ålborgvej 4", "Sverige", 18593901);
         Storage.addCompanion(janMadsen);
         Controller.createHotelExtraChoices("Wifi", 50, denHvideSvane);

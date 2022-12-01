@@ -1,7 +1,7 @@
 package GUI;
 
 import Application.Controller.Controller;
-import Application.Model.Conference;
+import Application.Model.*;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -9,12 +9,13 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
-import java.util.ArrayList;
-
 public class AdminTab extends GridPane {
     private TextField txfCompanions, txfCompanions1, txfCompanions2, txfActivities, txfActivities1, txfActivities2;
-    private TextArea txaConferenceDeltagere;
-    private ListView lvwHotelParticipants, lvwConference, lvwHotels, lvwActivities, lvwCompanions;
+    private ListView<Hotel> lvwHotels;
+    private ListView<Conference> lvwConference;
+    private ListView<CompanionActivity> lvwActivities;
+    private ListView<Companion> lvwCompanion;
+    private ListView<Participant> lvwHotelParticipants, lvwConferenceDeltagere;
     private Label lblHotelParticipants, lblConferenceDeltagere, lblHotel, lblActivities, lblCompanions;
 
     public AdminTab() {
@@ -35,57 +36,55 @@ public class AdminTab extends GridPane {
         this.add(lblCompanions, 3, 4);
 
         lvwConference = new ListView<>();
-        lvwConference.getItems().add(Controller.getConferences());
+        lvwConference.getItems().setAll(Controller.getConferences());
+        lvwConference.getSelectionModel().selectedItemProperty().addListener((ov, oldValue, newValue) -> this.selectedConferenceChanged(newValue));
         this.add(lvwConference, 0, 1);
 
-        txaConferenceDeltagere = new TextArea();
-        txaConferenceDeltagere.setText(Controller.getParticipants() + "");
-        System.out.println(Controller.getParticipants());
-        this.add(txaConferenceDeltagere, 2, 1);
+        lvwConferenceDeltagere = new ListView<>();
+        this.add(lvwConferenceDeltagere, 2, 1);
 
-        lvwHotels = new ListView();
-        lvwHotels.getItems().add(Controller.getHotels());
+        lvwHotels = new ListView<>();
         this.add(lvwHotels, 2, 2);
+        lvwHotels.getSelectionModel().selectedItemProperty().addListener((ov, oldValue, newValue) -> this.selectedHotelChanged(newValue));
 
-        lvwHotelParticipants = new ListView();
-        //lvwHotelParticipants.getItems().add                       fix this shit
+        lvwHotelParticipants = new ListView<>();
         this.add(lvwHotelParticipants, 2, 3);
 
-        //lvwActivities = new ListView();
+        lvwActivities = new ListView<>();
+        this.add(lvwActivities, 2, 4);
+        lvwActivities.getSelectionModel().selectedItemProperty().addListener((ov, oldValue, newValue) -> this.selectedActivityChanged(newValue));
 
-        txfActivities = new TextField();
-        txfActivities1 = new TextField();
-        txfActivities2 = new TextField();
-        txfCompanions = new TextField();
-        txfCompanions1 = new TextField();
-        txfCompanions2 = new TextField();
-        this.add(txfActivities, 2, 4);
-        this.add(txfActivities1, 2, 5);
-        this.add(txfActivities2, 2, 6);
-        this.add(txfCompanions, 4, 4);
-        this.add(txfCompanions1, 4, 5);
-        this.add(txfCompanions2, 4, 6);
-            txfActivities.setText(Controller.getActivitylist().get(0) + "");
-            txfActivities1.setText(Controller.getActivitylist().get(1) + "");
-            txfActivities2.setText(Controller.getActivitylist().get(2) + "");
-            //txfCompanions.setText(Controller.getCompanionsAtActivity());
-
-
-        /*lvwCompanions = new ListView();
-        lvwCompanions.getItems().add(Controller.getCompanions());
-        this.add(lvwCompanions, 2, 7);*/
+        lvwCompanion = new ListView<>();
+        this.add(lvwCompanion, 4, 4);
     }
 
-    private void selectedConferenceChanged() {
-        this.updateControls();
+    private void selectedActivityChanged(CompanionActivity newValue) {
+        if (newValue != null) {
+            lvwCompanion.getItems().setAll(newValue.getCompanionAtActivity());
+        }
+    }
+
+    private void selectedHotelChanged(Hotel newValue) {
+        if (newValue != null) {
+           lvwHotelParticipants.getItems().setAll(newValue.getParticipantsInHotel());
+        }
+    }
+
+    private void selectedConferenceChanged(Conference newValue) {
+        if (newValue != null) {
+            lvwHotels.getItems().setAll(newValue.getListOfHotels());
+            lvwConferenceDeltagere.getItems().setAll(Controller.getParticipants());
+            System.out.println("TxaConfDeltager" + Controller.getParticipants());
+            lvwActivities.getItems().setAll(Controller.getActivitylist());
+        }
     }
 
     private void updateControls() {
         Conference conference = (Conference) lvwConference.getSelectionModel().getSelectedItem();
         if (conference != null) {
-            lvwConference.getItems().add(Controller.getConferences());
-            lvwHotels.getItems().add(Controller.getHotels());
-            txaConferenceDeltagere.setText(Controller.getParticipants() + "");
+            lvwConference.getItems().setAll(Controller.getConferences());
+            lvwHotels.getItems().setAll(Controller.getHotels());
+            lvwConferenceDeltagere.getItems().setAll(Controller.getParticipants());
         }
     }
 }

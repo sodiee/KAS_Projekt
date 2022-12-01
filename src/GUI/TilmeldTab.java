@@ -1,6 +1,7 @@
 package GUI;
 
 import Application.Controller.Controller;
+import Application.Model.Companion;
 import Application.Model.Conference;
 import Application.Model.Hotel;
 import Application.Model.Participant;
@@ -23,8 +24,8 @@ public class TilmeldTab extends GridPane {
     private RadioButton rbtnCompanionYes = new RadioButton("Ja");
     private RadioButton rbtnCompanionNo = new RadioButton("Nej");
 
-    private ToggleGroup tglLecture;
-    private TextField txfDeltagerNavn, txfAdresse, txfByLand, txfTlfNummer, txfAnkomstdato, txfAfrejsedato, txfFirmaNavn, txfFirmaTlfNummer;
+    private ToggleGroup tglLecture, tglCompanion;
+    private TextField txfDeltagerNavn, txfAdresse, txfByLand, txfTlfNummer, txfAnkomstdato, txfAfrejsedato, txfFirmaNavn, txfFirmaTlfNummer, txfLedsagerNavn, txfLedsagerAdresse, txfLedsagerByLand, txfLedsagerTlf;
     private ComboBox<ArrayList<Conference>> conferenceBox;
     private ComboBox<ArrayList<Hotel>> hotelBox;
     private Button btnTilmeld;
@@ -113,7 +114,7 @@ public class TilmeldTab extends GridPane {
         hbxVB2.setSpacing(10);
         participantPane.add(hbxVB2, 1, 10);
 
-        ToggleGroup tglCompanion = new ToggleGroup();
+        tglCompanion = new ToggleGroup();
 
 
         rbtnCompanionYes.setToggleGroup(tglCompanion);
@@ -146,10 +147,10 @@ public class TilmeldTab extends GridPane {
         companionPane.setStyle("-fx-border-color: black");
         companionPane.setDisable(true);
 
-        TextField txfLedsagerNavn = new TextField();
-        TextField txfLedsagerAdresse = new TextField();
-        TextField txfLedsagerByLand = new TextField();
-        TextField txfLedsagerTlf = new TextField();
+        txfLedsagerNavn = new TextField();
+        txfLedsagerAdresse = new TextField();
+        txfLedsagerByLand = new TextField();
+        txfLedsagerTlf = new TextField();
 
 
         companionPane.add(txfLedsagerNavn, 1, 1);
@@ -228,59 +229,66 @@ public class TilmeldTab extends GridPane {
 
     private void checkAdresse() {
         if (txfAdresse.getText().isEmpty()) {
-            Alert a = new Alert(Alert.AlertType.INFORMATION);
-            a.setContentText("Indtast en adresse");
-            a.showAndWait();
-            txfTlfNummer.setText("");
-        } else {;}
+            alertError("en adresse");
+            txfAdresse.setText("");
+        }
     }
     private void checkLand() {
         if (txfByLand.getText().isEmpty()) {
-            Alert a = new Alert(Alert.AlertType.INFORMATION);
-            a.setContentText("Indtast et land");
-            a.showAndWait();
-            txfTlfNummer.setText("");
-        } else {;}
+            alertError("et land");
+            txfByLand.setText("");
+        }
     }
     private void checkAnkomst() {
         if (txfAnkomstdato.getText().isEmpty()) {
-            Alert a = new Alert(Alert.AlertType.INFORMATION);
-            a.setContentText("Indtast en dato");
-            a.showAndWait();
-            txfTlfNummer.setText("");
-        } else {;}
+            alertError("en ankomstdato");
+            txfAnkomstdato.setText("");
+        }
     }
 
     private void checkAfrejse() {
         if (txfAfrejsedato.getText().isEmpty()) {
-            Alert a = new Alert(Alert.AlertType.INFORMATION);
-            a.setContentText("Indtast en dato");
-            a.showAndWait();
-            txfTlfNummer.setText("");
-        } else {;}
+            alertError("en afrejsedato");
+            txfAfrejsedato.setText("");
+        }
     }
 
     private void checkNavn() {
         if (txfDeltagerNavn.getText().isEmpty()) {
-            Alert a = new Alert(Alert.AlertType.INFORMATION);
-            a.setContentText("Indtast et navn");
-            a.showAndWait();
-            txfTlfNummer.setText("");
-        } else {;}
+            alertError("et navn");
+            txfDeltagerNavn.setText("");
+        }
     }
     private void checkTlf() {
-        var s = txfTlfNummer.getText();
+        String s = txfTlfNummer.getText();
         for (var ch : s.toCharArray()){
             if ('0' <= ch && ch <= '9')
-            {;}
+            {
+                ;
+            }
             else
             {
-                Alert a = new Alert(Alert.AlertType.INFORMATION);
-                a.setContentText("Indtast kun tal");
-                a.showAndWait();
+                alertError("et tal");
                 txfTlfNummer.setText("");
             }
         }
+    }
+
+    private void checkLecture(){
+        if (!tglLecture.getSelectedToggle().isSelected()){
+            alertError("/vælg om du er foredragsholder");
+        }
+    }
+    private void checkCompanion(){
+        if (!tglCompanion.getSelectedToggle().isSelected()){
+            alertError("/vælg om du har en ledsager med");
+        }
+    }
+
+    public void alertError(String string){
+        Alert a = new Alert(Alert.AlertType.INFORMATION);
+        a.setContentText("Indtast " + string);
+        a.showAndWait();
     }
 
     public void yesButtonSelected(){
@@ -294,6 +302,34 @@ public class TilmeldTab extends GridPane {
         }
     }
 
+    public Companion tglCompanionSelection(){
+        Companion c = null;
+        if (rbtnCompanionYes.isSelected()) {
+            c = new Companion(txfLedsagerNavn.getText(), txfLedsagerAdresse.getText(), txfLedsagerByLand.getText(),Integer.parseInt(txfLedsagerTlf.getText()));
+            Controller.addCompanion(c);
+            System.out.println("ja");
+        } else {
+            System.out.println("nej");
+        }
+        return c;
+    }
+
+    public void createCompanion(){
+        Companion c = new Companion(txfLedsagerNavn.getText(), txfLedsagerAdresse.getText(), txfLedsagerByLand.getText(),Integer.parseInt(txfLedsagerTlf.getText()));
+        Controller.addCompanion(c);
+    }
+    public void yesButtonAction(){
+        if (rbtnCompanionYes.isSelected()){
+            createCompanion();
+        }
+    }
+    public Object noButtonAction() {
+        if (rbtnCompanionNo.isSelected()) {
+            return null;
+        }
+        return null;
+    }
+
     public void tilmeldAction(){
         checkNavn();
         checkTlf();
@@ -301,13 +337,14 @@ public class TilmeldTab extends GridPane {
         checkAfrejse();
         checkAnkomst();
         checkLand();
+        checkLecture();
+        tglCompanionSelection();
         Participant p = new Participant(txfDeltagerNavn.getText(), txfAdresse.getText(), txfByLand.getText(), Integer.parseInt(txfTlfNummer.getText()));
         var idxConf = conferenceBox.getSelectionModel().getSelectedIndex();
         var conf = Controller.getConferences().get(idxConf);
         var idxHot = hotelBox.getSelectionModel().getSelectedIndex();
         var hot = Controller.getHotels().get(idxHot);
-        Controller.createConferenceParticipantData(conf, p, hot, null, tglLecture.getSelectedToggle().isSelected(), 3); //((Integer.parseInt(txfAfrejsedato.getText()) - Integer.parseInt(txfAnkomstdato.getText())) + 1));
-        Controller.addToConference(p, Controller.getConferences().get(idxConf));
+        Controller.createConferenceParticipantData(conf, p, hot, tglCompanionSelection(), tglLecture.getSelectedToggle().isSelected(), 3); //((Integer.parseInt(txfAfrejsedato.getText()) - Integer.parseInt(txfAnkomstdato.getText())) + 1));
     }
 
     public Hotel chosenHotel(){

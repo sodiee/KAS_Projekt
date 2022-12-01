@@ -18,12 +18,12 @@ public class Storage {
         return new ArrayList<Participant>(participants);
     }
 
-    public static void addParticipant(Participant employee) {
-        participants.add(employee);
+    public static void addParticipant(Participant participant) {
+        participants.add(participant);
     }
 
-    public static void removeParticipant(Participant employee) {
-        participants.remove(employee);
+    public static void removeParticipant(Participant participant) {
+        participants.remove(participant);
     }
 
     // -------------------------------------------------------------------------
@@ -32,11 +32,11 @@ public class Storage {
         return companions;
     }
 
-    public static void addCompanion(Companion customer) {
-        companions.add(customer);
+    public static void addCompanion(Companion companion) {
+        companions.add(companion);
     }
 
-    public static void removeCompanion(Companion customer){companions.remove(customer);}
+    public static void removeCompanion(Companion companion){companions.remove(companion);}
 
     // -------------------------------------------------------------------------
 
