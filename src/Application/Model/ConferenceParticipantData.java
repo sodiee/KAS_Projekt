@@ -12,14 +12,14 @@ public class ConferenceParticipantData {
     private int daysAtConference;
     private double totalPrice;
 
-    public ConferenceParticipantData(Conference conference, Participant participant, Hotel hotel, Companion companion, boolean lecturer, int daysAtConference) {
+    public ConferenceParticipantData(Conference conference, Participant participant, Hotel hotel, Companion companion, boolean lecturer, int daysAtConference, ArrayList<HotelExtraChoices> hotelExtraChoices) {
         this.conference = conference;
         this.participant = participant;
         this.hotel = hotel;
         this.companion = companion;
         this.lecturer = lecturer;
         this.daysAtConference = daysAtConference;
-        hotelExtraChoices = new ArrayList<>();
+        this.hotelExtraChoices = hotelExtraChoices;
     }
 
     public void addExtraChoices(HotelExtraChoices extraChoices) {
@@ -28,7 +28,6 @@ public class ConferenceParticipantData {
 
     public double getTotalPrice() {
         double totalPrice = 0;
-
         if (!this.lecturer) {
             totalPrice += conference.getPricePerDay() * daysAtConference;
         }
@@ -43,7 +42,6 @@ public class ConferenceParticipantData {
         if (companion != null) {
             totalPrice += companion.getTotalPriceOfActivities();
         }
-        
 
         return totalPrice;
     }

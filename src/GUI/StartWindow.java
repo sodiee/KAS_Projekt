@@ -39,7 +39,7 @@ public class StartWindow extends Application {
 		AdminTab adminTab = new AdminTab();
 
 		TabPane tabPane = new TabPane();
-
+			tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 		Tab tab1 = new Tab("Tilmelding", new Label("Tilmelding"));
 		Tab tab2 = new Tab("Admin"  , new Label("Admin"));
 

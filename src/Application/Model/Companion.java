@@ -1,5 +1,7 @@
 package Application.Model;
 
+import Storage.Storage;
+
 import java.util.ArrayList;
 
 public class Companion extends APerson{
@@ -7,6 +9,7 @@ public class Companion extends APerson{
     public Companion(String name, String address, String country, int phoneNumber) {
         super(name, address, country, phoneNumber);
         this.activities = new ArrayList<>();
+        Storage.addCompanion(this);
     }
 
     public void registerToActivities(CompanionActivity activity){

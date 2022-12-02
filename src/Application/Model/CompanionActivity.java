@@ -1,5 +1,7 @@
 package Application.Model;
 
+import Storage.Storage;
+
 import java.util.ArrayList;
 
 public class CompanionActivity {
@@ -15,6 +17,7 @@ public class CompanionActivity {
         this.activityPrice = activityPrice;
         this.activityDate = activityDate;
         registeredCompanions = new ArrayList<>();
+        Storage.addActivities(this );
     }
     public int getActivityPrice() {
         return activityPrice;

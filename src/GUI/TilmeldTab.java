@@ -29,6 +29,7 @@ public class TilmeldTab extends GridPane {
     private ComboBox<ArrayList<Hotel>> hotelBox;
     private Button btnTilmeld;
     private CheckBox chkHotelBox, chkTrapholt, chkEgeskov, chkByRundtur, chkWifi, chkMorgenmad, chkBad;
+
     public TilmeldTab() {
         this.setPadding(new Insets(20));
         this.setHgap(20);
@@ -156,7 +157,7 @@ public class TilmeldTab extends GridPane {
         chkWifi = new CheckBox();
         participantPane.add(chkWifi, 1, 16);
         Label lblWifi = new Label("Ekstra tilvalg Wifi:");
-        participantPane.add(lblWifi,0,16);
+        participantPane.add(lblWifi, 0, 16);
 
         this.add(companionPane, 1, 1);
         companionPane.setPadding(new Insets(10));
@@ -205,10 +206,10 @@ public class TilmeldTab extends GridPane {
         btnTilmeld.setOnAction(event -> tilmeldAction());
 
         Label lblUdflugter = new Label("Udflugter:");
-        companionPane.add(lblUdflugter,0,6);
+        companionPane.add(lblUdflugter, 0, 6);
 
         chkByRundtur = new CheckBox();
-        companionPane.add(chkByRundtur,1,8);
+        companionPane.add(chkByRundtur, 1, 8);
 
         Label lblByRundtur = new Label("Byrundtur i Odense");
         companionPane.add(lblByRundtur, 0, 8);
@@ -217,10 +218,10 @@ public class TilmeldTab extends GridPane {
         Font font = Font.font("Verdana", FontWeight.BOLD, FontPosture.ITALIC, 14);
         lblBrBeskriv.setFont(font);
         //lblBrBeskriv.setStyle("-fx-font-style: italic; + -fx-font-size: 16;");
-        companionPane.add(lblBrBeskriv, 0,9);
+        companionPane.add(lblBrBeskriv, 0, 9);
 
         chkEgeskov = new CheckBox();
-        companionPane.add(chkEgeskov,1,12);
+        companionPane.add(chkEgeskov, 1, 12);
 
         Label lblEgeskov = new Label("Egeskov");
         companionPane.add(lblEgeskov, 0, 12);
@@ -228,10 +229,10 @@ public class TilmeldTab extends GridPane {
         Label lblEgeskovBeskriv = new Label("19/5-22. Pris: 75kr");
         Font font1 = Font.font("Verdana", FontWeight.BOLD, FontPosture.ITALIC, 14);
         lblEgeskovBeskriv.setFont(font);
-        companionPane.add(lblEgeskovBeskriv, 0,13);
+        companionPane.add(lblEgeskovBeskriv, 0, 13);
 
         chkTrapholt = new CheckBox();
-        companionPane.add(chkTrapholt,1,16);
+        companionPane.add(chkTrapholt, 1, 16);
 
         Label lblTrapholt = new Label("Trapholt Museum, Kolding");
         companionPane.add(lblTrapholt, 0, 16);
@@ -239,9 +240,8 @@ public class TilmeldTab extends GridPane {
         Label lblTrapBeskriv = new Label("20/5-22. Pris: 200kr inkl. frokost");
         Font font2 = Font.font("Verdana", FontWeight.BOLD, FontPosture.ITALIC, 14);
         lblTrapBeskriv.setFont(font);
-        companionPane.add(lblTrapBeskriv, 0,17);
+        companionPane.add(lblTrapBeskriv, 0, 17);
     }
-
 
 
     // -------------------------------------------------------------------------
@@ -251,12 +251,14 @@ public class TilmeldTab extends GridPane {
             txfAdresse.setText("");
         }
     }
+
     private void checkLand() {
         if (txfByLand.getText().isEmpty()) {
             alertError("et land");
             txfByLand.setText("");
         }
     }
+
     private void checkAnkomst() {
         if (txfAnkomstdato.getText().isEmpty()) {
             alertError("en ankomstdato");
@@ -277,50 +279,50 @@ public class TilmeldTab extends GridPane {
             txfDeltagerNavn.setText("");
         }
     }
+
     private void checkTlf() {
         String s = txfTlfNummer.getText();
-        for (var ch : s.toCharArray()){
-            if ('0' <= ch && ch <= '9')
-            {
+        for (var ch : s.toCharArray()) {
+            if ('0' <= ch && ch <= '9') {
                 ;
-            }
-            else
-            {
+            } else {
                 alertError("et tal");
                 txfTlfNummer.setText("");
             }
         }
     }
 
-    private void checkLecture(){
-        if (!tglLecture.getSelectedToggle().isSelected()){
+    private void checkLecture() {
+        if (!tglLecture.getSelectedToggle().isSelected()) {
             alertError("/vælg om du er foredragsholder");
         }
     }
-    private void checkCompanion(){
-        if (!tglCompanion.getSelectedToggle().isSelected()){
+
+    private void checkCompanion() {
+        if (!tglCompanion.getSelectedToggle().isSelected()) {
             alertError("/vælg om du har en ledsager med");
         }
     }
 
-    public void alertError(String string){
+    public void alertError(String string) {
         Alert a = new Alert(Alert.AlertType.INFORMATION);
         a.setContentText("Indtast " + string);
         a.showAndWait();
     }
 
-    public void yesButtonSelected(){
+    public void yesButtonSelected() {
         if (rbtnCompanionYes.isSelected()) {
             companionPane.setDisable(false);
         }
     }
-    public void noButtonSelected(){
+
+    public void noButtonSelected() {
         if (rbtnCompanionNo.isSelected()) {
             companionPane.setDisable(true);
         }
     }
 
-    public boolean tglLectureSelection(){
+    public boolean tglLectureSelection() {
         boolean lecture = false;
         if (rbtnLectureYes.isSelected()) {
             lecture = true;
@@ -328,28 +330,42 @@ public class TilmeldTab extends GridPane {
         return lecture;
     }
 
-    public Companion tglCompanionSelection(){
+    public Companion tglCompanionSelection() {
         Companion c = null;
         if (rbtnCompanionYes.isSelected()) {
-            c = new Companion(txfLedsagerNavn.getText(), txfLedsagerAdresse.getText(), txfLedsagerByLand.getText(),Integer.parseInt(txfLedsagerTlf.getText()));
+            c = new Companion(txfLedsagerNavn.getText(), txfLedsagerAdresse.getText(), txfLedsagerByLand.getText(), Integer.parseInt(txfLedsagerTlf.getText()));
             Controller.addCompanion(c);
-            System.out.println("ja");
-        } else {
-            System.out.println("nej");
+        } if (rbtnCompanionYes.isSelected()) {
+            CompanionActivity cA0 = Controller.getActivitylist().get(0);
+            CompanionActivity cA1 = Controller.getActivitylist().get(1);
+            CompanionActivity cA2 = Controller.getActivitylist().get(2);
+            if (chkEgeskov.isSelected()) {
+                cA0.addCompanionToActivity(c);
+                c.addCompanionActivity(cA0);
+            }
+            if (chkTrapholt.isSelected()) {
+                cA1.addCompanionToActivity(c);
+                c.addCompanionActivity(cA1);
+            }
+            if (chkByRundtur.isSelected()) {
+                cA2.addCompanionToActivity(c);
+                c.addCompanionActivity(cA2);
+            }
         }
         return c;
     }
 
-    public void seSamletPris(ConferenceParticipantData conferenceParticipantData){
+    public void seSamletPris(ConferenceParticipantData conferenceParticipantData) {
         txfSamletPris.setText(String.valueOf(Controller.getPris(conferenceParticipantData)));
     }
 
-    public void createCompanion(){
-        Companion c = new Companion(txfLedsagerNavn.getText(), txfLedsagerAdresse.getText(), txfLedsagerByLand.getText(),Integer.parseInt(txfLedsagerTlf.getText()));
+    public void createCompanion() {
+        Companion c = new Companion(txfLedsagerNavn.getText(), txfLedsagerAdresse.getText(), txfLedsagerByLand.getText(), Integer.parseInt(txfLedsagerTlf.getText()));
         Controller.addCompanion(c);
     }
 
-    public void checkChkBoxes(){
+
+    public void checkChkBoxes() {
         if (rbtnCompanionYes.isSelected()) {
             Companion c = new Companion(txfLedsagerNavn.getText(), txfLedsagerAdresse.getText(), txfLedsagerByLand.getText(), Integer.parseInt(txfLedsagerTlf.getText()));
             CompanionActivity cA0 = Controller.getActivitylist().get(0);
@@ -366,19 +382,36 @@ public class TilmeldTab extends GridPane {
             }
         }
     }
-    public void tilmeldAction(){
-            Hotel hotel = null;
-            if (chkHotelBox.isSelected()) {
-                hotelBox.getSelectionModel().clearSelection();
-                hotel = null;
-            } else {
-                var idxHot = hotelBox.getSelectionModel().getSelectedIndex();
-                hotel = Controller.getHotels().get(idxHot);
+
+    public void tilmeldAction() {
+
+        Hotel hotel = null;
+        ArrayList<HotelExtraChoices> hotelExtraChoices = new ArrayList<>();
+        if (!chkHotelBox.isSelected()) {
+            hotel = hotelBox.getValue().get(0);
+            System.out.println(hotel);
+            if (chkBad.isSelected()) {
+                HotelExtraChoices bad = hotel.getExtraChoices().get(0);
+                hotelExtraChoices.add(bad);
             }
-            boolean lecture = false;
-            if (rbtnLectureYes.isSelected()) {
-                lecture = true;
+            if (chkMorgenmad.isSelected()) {
+                HotelExtraChoices morgenmad = hotel.getExtraChoices().get(1);
+                hotelExtraChoices.add(morgenmad);
             }
+            if (chkWifi.isSelected()) {
+                HotelExtraChoices wifi = hotel.getExtraChoices().get(2);
+                hotelExtraChoices.add(wifi);
+            }
+        } else {
+            hotelBox.getSelectionModel().clearSelection();
+            chkMorgenmad.setSelected(false);
+            chkBad.setSelected(false);
+            chkWifi.setSelected(false);
+        }
+        boolean lecture = false;
+        if (rbtnLectureYes.isSelected()) {
+            lecture = true;
+        }
         checkNavn();
         checkTlf();
         checkAdresse();
@@ -386,19 +419,16 @@ public class TilmeldTab extends GridPane {
         checkAnkomst();
         checkLand();
         checkLecture();
-        tglCompanionSelection();
         checkCompanion();
-        checkChkBoxes();
         Participant p = new Participant(txfDeltagerNavn.getText(), txfAdresse.getText(), txfByLand.getText(), Integer.parseInt(txfTlfNummer.getText()));
         var idxConf = conferenceBox.getSelectionModel().getSelectedIndex();
         var conf = Controller.getConferences().get(idxConf);
-        ConferenceParticipantData cPD = Controller.createConferenceParticipantData(conf, p, hotel, tglCompanionSelection(), tglLectureSelection(), 3); //((Integer.parseInt(txfAfrejsedato.getText()) - Integer.parseInt(txfAnkomstdato.getText())) + 1));
-        System.out.println("CDP oprettet");
+        ConferenceParticipantData cPD = Controller.createConferenceParticipantData(conf, p, hotel, tglCompanionSelection(), tglLectureSelection(), 3, hotelExtraChoices); //((Integer.parseInt(txfAfrejsedato.getText()) - Integer.parseInt(txfAnkomstdato.getText())) + 1));
         seSamletPris(cPD);
     }
 
 
-    public Hotel chosenHotel(){
+    public Hotel chosenHotel() {
         if (hotelBox.getSelectionModel().getSelectedIndex() == 0) {
             return null;
         } else {

@@ -6,20 +6,19 @@ public class Hotel {
     private String hotelName;
     private int daysRent;
     private ArrayList<HotelExtraChoices> extraChoices;
-    private HotelExtraChoices hotelExtraChoices;
     private ArrayList<Participant> participantsInHotel;
     private double priceSingle;
     private double priceDouble;
 
     public Hotel(String hotelName, double priceSingle, double priceDouble) {
         this.hotelName = hotelName;
-        this.extraChoices = new ArrayList<>();
+        this.extraChoices = new ArrayList<>(3);
         this.participantsInHotel = new ArrayList<>();
         this.priceSingle = priceSingle;
         this.priceDouble = priceDouble;
     }
     public HotelExtraChoices createHotelExtraChoices(String name, double price) {
-        hotelExtraChoices = new HotelExtraChoices(name, price);
+        HotelExtraChoices hotelExtraChoices = new HotelExtraChoices(name, price);
         extraChoices.add(hotelExtraChoices);
         return hotelExtraChoices;
     }
@@ -50,14 +49,6 @@ public class Hotel {
 
     public void setExtraChoices(ArrayList<HotelExtraChoices> extraChoices) {
         this.extraChoices = extraChoices;
-    }
-
-    public HotelExtraChoices getHotelExtraChoices() {
-        return hotelExtraChoices;
-    }
-
-    public void setHotelExtraChoices(HotelExtraChoices hotelExtraChoices) {
-        this.hotelExtraChoices = hotelExtraChoices;
     }
 
     public void addParticipantToHotel(Participant participant){
