@@ -20,7 +20,6 @@ public class ConferenceParticipantData {
         this.lecturer = lecturer;
         this.daysAtConference = daysAtConference;
         hotelExtraChoices = new ArrayList<>();
-        System.out.println("Hej");
     }
 
     public void addExtraChoices(HotelExtraChoices extraChoices) {

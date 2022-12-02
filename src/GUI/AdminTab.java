@@ -3,10 +3,7 @@ package GUI;
 import Application.Controller.Controller;
 import Application.Model.*;
 import javafx.geometry.Insets;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
 public class AdminTab extends GridPane {
@@ -17,6 +14,7 @@ public class AdminTab extends GridPane {
     private ListView<Companion> lvwCompanion;
     private ListView<Participant> lvwHotelParticipants, lvwConferenceDeltagere;
     private Label lblConference, lblHotelParticipants, lblConferenceDeltagere, lblHotel, lblActivities, lblCompanions;
+    private Button btnUpdate;
 
     public AdminTab() {
         this.setPadding(new Insets(20));
@@ -42,6 +40,10 @@ public class AdminTab extends GridPane {
         lvwConference.getSelectionModel().selectedItemProperty().addListener((ov, oldValue, newValue) -> this.selectedConferenceChanged(newValue));
         this.add(lvwConference, 0, 1);
 
+        btnUpdate = new Button("Clear");
+        this.add(btnUpdate, 1, 0);
+        btnUpdate.setOnAction(event -> this.clear());
+
         lvwConferenceDeltagere = new ListView<>();
         this.add(lvwConferenceDeltagere, 2, 1);
 
@@ -60,6 +62,15 @@ public class AdminTab extends GridPane {
         this.add(lvwCompanion, 4, 3);
     }
 
+    private void clear(){
+            lvwHotels.getItems().setAll();
+            lvwConferenceDeltagere.getItems().setAll();
+            lvwActivities.getItems().setAll();
+            lvwCompanion.getItems().setAll();
+            lvwConference.getSelectionModel().clearSelection();
+            lvwHotelParticipants.getItems().setAll();
+        }
+
     private void selectedActivityChanged(CompanionActivity newValue) {
         if (newValue != null) {
             lvwCompanion.getItems().setAll(newValue.getCompanionAtActivity());
@@ -76,7 +87,7 @@ public class AdminTab extends GridPane {
         if (newValue != null) {
             lvwHotels.getItems().setAll(newValue.getListOfHotels());
             lvwConferenceDeltagere.getItems().setAll(Controller.getParticipants());
-            System.out.println("TxaConfDeltager" + Controller.getParticipants());
+            System.out.println("lvwConfDeltager" + Controller.getParticipants());
             lvwActivities.getItems().setAll(Controller.getActivitylist());
         }
     }

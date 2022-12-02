@@ -1,10 +1,7 @@
 package GUI;
 
 import Application.Controller.Controller;
-import Application.Model.Companion;
-import Application.Model.Conference;
-import Application.Model.Hotel;
-import Application.Model.Participant;
+import Application.Model.*;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -24,11 +21,14 @@ public class TilmeldTab extends GridPane {
     private RadioButton rbtnCompanionYes = new RadioButton("Ja");
     private RadioButton rbtnCompanionNo = new RadioButton("Nej");
 
+    private RadioButton rbtnLectureYes, rbtnLectureNo;
+
     private ToggleGroup tglLecture, tglCompanion;
-    private TextField txfDeltagerNavn, txfAdresse, txfByLand, txfTlfNummer, txfAnkomstdato, txfAfrejsedato, txfFirmaNavn, txfFirmaTlfNummer, txfLedsagerNavn, txfLedsagerAdresse, txfLedsagerByLand, txfLedsagerTlf;
+    private TextField txfDeltagerNavn, txfAdresse, txfByLand, txfTlfNummer, txfAnkomstdato, txfAfrejsedato, txfFirmaNavn, txfFirmaTlfNummer, txfLedsagerNavn, txfLedsagerAdresse, txfLedsagerByLand, txfLedsagerTlf, txfSamletPris;
     private ComboBox<ArrayList<Conference>> conferenceBox;
     private ComboBox<ArrayList<Hotel>> hotelBox;
     private Button btnTilmeld;
+    private CheckBox chkHotelBox, chkTrapholt, chkEgeskov, chkByRundtur, chkWifi, chkMorgenmad, chkBad;
     public TilmeldTab() {
         this.setPadding(new Insets(20));
         this.setHgap(20);
@@ -102,9 +102,9 @@ public class TilmeldTab extends GridPane {
 
 
         tglLecture = new ToggleGroup();
-        RadioButton rbtnLectureYes = new RadioButton("Ja");
+        rbtnLectureYes = new RadioButton("Ja");
         rbtnLectureYes.setToggleGroup(tglLecture);
-        RadioButton rbtnLectureNo = new RadioButton("Nej");
+        rbtnLectureNo = new RadioButton("Nej");
         rbtnLectureNo.setToggleGroup(tglLecture);
 
         Label lblLecture = new Label("Foredragsholder?");
@@ -139,6 +139,24 @@ public class TilmeldTab extends GridPane {
 
         Label lblHotel = new Label("Hotel:");
         participantPane.add(lblHotel, 0, 12);
+
+        Label lblNoHotel = new Label("Intet hotel:");
+        participantPane.add(lblNoHotel, 0, 13);
+        chkHotelBox = new CheckBox();
+        participantPane.add(chkHotelBox, 1, 13);
+
+        chkBad = new CheckBox();
+        participantPane.add(chkBad, 1, 14);
+        Label lblBad = new Label("Ekstra tilvalg Bad:");
+        participantPane.add(lblBad, 0, 14);
+        chkMorgenmad = new CheckBox();
+        participantPane.add(chkMorgenmad, 1, 15);
+        Label lblMorgenmad = new Label("Ekstra tilvalg Morgenmad:");
+        participantPane.add(lblMorgenmad, 0, 15);
+        chkWifi = new CheckBox();
+        participantPane.add(chkWifi, 1, 16);
+        Label lblWifi = new Label("Ekstra tilvalg Wifi:");
+        participantPane.add(lblWifi,0,16);
 
         this.add(companionPane, 1, 1);
         companionPane.setPadding(new Insets(10));
@@ -177,7 +195,7 @@ public class TilmeldTab extends GridPane {
         finalPane.setVgap(10);
         finalPane.setStyle("-fx-border-color: black");
 
-        TextField txfSamletPris = new TextField("Samlet pris");
+        txfSamletPris = new TextField("Samlet pris");
         txfSamletPris.setEditable(false);
         finalPane.add(txfSamletPris, 0, 0);
 
@@ -189,8 +207,8 @@ public class TilmeldTab extends GridPane {
         Label lblUdflugter = new Label("Udflugter:");
         companionPane.add(lblUdflugter,0,6);
 
-        CheckBox cbByRundtur = new CheckBox();
-        companionPane.add(cbByRundtur,1,8);
+        chkByRundtur = new CheckBox();
+        companionPane.add(chkByRundtur,1,8);
 
         Label lblByRundtur = new Label("Byrundtur i Odense");
         companionPane.add(lblByRundtur, 0, 8);
@@ -201,8 +219,8 @@ public class TilmeldTab extends GridPane {
         //lblBrBeskriv.setStyle("-fx-font-style: italic; + -fx-font-size: 16;");
         companionPane.add(lblBrBeskriv, 0,9);
 
-        CheckBox cbEgeskov = new CheckBox();
-        companionPane.add(cbEgeskov,1,12);
+        chkEgeskov = new CheckBox();
+        companionPane.add(chkEgeskov,1,12);
 
         Label lblEgeskov = new Label("Egeskov");
         companionPane.add(lblEgeskov, 0, 12);
@@ -212,8 +230,8 @@ public class TilmeldTab extends GridPane {
         lblEgeskovBeskriv.setFont(font);
         companionPane.add(lblEgeskovBeskriv, 0,13);
 
-        CheckBox cbTrapholt = new CheckBox();
-        companionPane.add(cbTrapholt,1,16);
+        chkTrapholt = new CheckBox();
+        companionPane.add(chkTrapholt,1,16);
 
         Label lblTrapholt = new Label("Trapholt Museum, Kolding");
         companionPane.add(lblTrapholt, 0, 16);
@@ -225,8 +243,8 @@ public class TilmeldTab extends GridPane {
     }
 
 
-    // -------------------------------------------------------------------------
 
+    // -------------------------------------------------------------------------
     private void checkAdresse() {
         if (txfAdresse.getText().isEmpty()) {
             alertError("en adresse");
@@ -302,6 +320,14 @@ public class TilmeldTab extends GridPane {
         }
     }
 
+    public boolean tglLectureSelection(){
+        boolean lecture = false;
+        if (rbtnLectureYes.isSelected()) {
+            lecture = true;
+        }
+        return lecture;
+    }
+
     public Companion tglCompanionSelection(){
         Companion c = null;
         if (rbtnCompanionYes.isSelected()) {
@@ -314,23 +340,45 @@ public class TilmeldTab extends GridPane {
         return c;
     }
 
+    public void seSamletPris(ConferenceParticipantData conferenceParticipantData){
+        txfSamletPris.setText(String.valueOf(Controller.getPris(conferenceParticipantData)));
+    }
+
     public void createCompanion(){
         Companion c = new Companion(txfLedsagerNavn.getText(), txfLedsagerAdresse.getText(), txfLedsagerByLand.getText(),Integer.parseInt(txfLedsagerTlf.getText()));
         Controller.addCompanion(c);
     }
-    public void yesButtonAction(){
-        if (rbtnCompanionYes.isSelected()){
-            createCompanion();
-        }
-    }
-    public Object noButtonAction() {
-        if (rbtnCompanionNo.isSelected()) {
-            return null;
-        }
-        return null;
-    }
 
+    public void checkChkBoxes(){
+        if (rbtnCompanionYes.isSelected()) {
+            Companion c = new Companion(txfLedsagerNavn.getText(), txfLedsagerAdresse.getText(), txfLedsagerByLand.getText(), Integer.parseInt(txfLedsagerTlf.getText()));
+            CompanionActivity cA0 = Controller.getActivitylist().get(0);
+            CompanionActivity cA1 = Controller.getActivitylist().get(1);
+            CompanionActivity cA2 = Controller.getActivitylist().get(2);
+            if (chkEgeskov.isSelected()) {
+                cA0.addCompanionToActivity(c);
+            }
+            if (chkTrapholt.isSelected()) {
+                cA1.addCompanionToActivity(c);
+            }
+            if (chkByRundtur.isSelected()) {
+                cA2.addCompanionToActivity(c);
+            }
+        }
+    }
     public void tilmeldAction(){
+            Hotel hotel = null;
+            if (chkHotelBox.isSelected()) {
+                hotelBox.getSelectionModel().clearSelection();
+                hotel = null;
+            } else {
+                var idxHot = hotelBox.getSelectionModel().getSelectedIndex();
+                hotel = Controller.getHotels().get(idxHot);
+            }
+            boolean lecture = false;
+            if (rbtnLectureYes.isSelected()) {
+                lecture = true;
+            }
         checkNavn();
         checkTlf();
         checkAdresse();
@@ -339,13 +387,16 @@ public class TilmeldTab extends GridPane {
         checkLand();
         checkLecture();
         tglCompanionSelection();
+        checkCompanion();
+        checkChkBoxes();
         Participant p = new Participant(txfDeltagerNavn.getText(), txfAdresse.getText(), txfByLand.getText(), Integer.parseInt(txfTlfNummer.getText()));
         var idxConf = conferenceBox.getSelectionModel().getSelectedIndex();
         var conf = Controller.getConferences().get(idxConf);
-        var idxHot = hotelBox.getSelectionModel().getSelectedIndex();
-        var hot = Controller.getHotels().get(idxHot);
-        Controller.createConferenceParticipantData(conf, p, hot, tglCompanionSelection(), tglLecture.getSelectedToggle().isSelected(), 3); //((Integer.parseInt(txfAfrejsedato.getText()) - Integer.parseInt(txfAnkomstdato.getText())) + 1));
+        ConferenceParticipantData cPD = Controller.createConferenceParticipantData(conf, p, hotel, tglCompanionSelection(), tglLectureSelection(), 3); //((Integer.parseInt(txfAfrejsedato.getText()) - Integer.parseInt(txfAnkomstdato.getText())) + 1));
+        System.out.println("CDP oprettet");
+        seSamletPris(cPD);
     }
+
 
     public Hotel chosenHotel(){
         if (hotelBox.getSelectionModel().getSelectedIndex() == 0) {
