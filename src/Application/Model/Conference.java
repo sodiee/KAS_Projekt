@@ -10,9 +10,7 @@ public class Conference {
     private ArrayList<Hotel> listOfHotels;
     private double pricePerDay;
     private String name;
-    private Hotel hotel;
-    private CompanionActivity activity;
-    private ArrayList<CompanionActivity> activities;
+
 
     public Conference(String location, String startDate, String endDate, double pricePerDay, String name) {
         this.location = location;

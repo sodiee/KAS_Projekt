@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Hotel {
     private String hotelName;
-    private int daysRent;
+   // private int daysRent;
     private ArrayList<HotelExtraChoices> extraChoices;
     private ArrayList<Participant> participantsInHotel;
     private double priceSingle;
@@ -23,34 +23,34 @@ public class Hotel {
         return hotelExtraChoices;
     }
 
-    public void registerParticipantToRoom(Participant participant){
+   /* public void registerParticipantToRoom(Participant participant){
         participantsInHotel.add(participant);
     }
+*/
+    //public String getHotelName() {
+        //return hotelName;
+    //}
 
-    public String getHotelName() {
-        return hotelName;
-    }
-
-    public void setHotelName(String hotelName) {
+   /* public void setHotelName(String hotelName) {
         this.hotelName = hotelName;
-    }
+    }*/
 
-    public int getDaysRent() {
+   /* public int getDaysRent() {
         return daysRent;
-    }
+    }*/
 
-    public void setDaysRent(int daysRent) {
+   /* public void setDaysRent(int daysRent) {
         this.daysRent = daysRent;
-    }
+    }*/
 
     public ArrayList<HotelExtraChoices> getExtraChoices() {
         return extraChoices;
     }
 
-    public void setExtraChoices(ArrayList<HotelExtraChoices> extraChoices) {
+    /*public void setExtraChoices(ArrayList<HotelExtraChoices> extraChoices) {
         this.extraChoices = extraChoices;
     }
-
+*/
     public void addParticipantToHotel(Participant participant){
         participantsInHotel.add(participant);
     }
@@ -58,14 +58,14 @@ public class Hotel {
         return participantsInHotel;
     }
 
-    public void setParticipantsInHotel(ArrayList<Participant> participantsInHotel) {
+    /*public void setParticipantsInHotel(ArrayList<Participant> participantsInHotel) {
         this.participantsInHotel = participantsInHotel;
     }
-
-    public void remove(Participant participant) {
+*/
+   /* public void remove(Participant participant) {
         participantsInHotel.remove(participant);
     }
-
+*/
     public double getPriceSingle() {
         return priceSingle;
     }

@@ -25,19 +25,19 @@ public class Participant extends APerson {
         relatedCompanion.add(companion);
     }
 
-    public ArrayList<Companion> getRelatedCompanion(){return relatedCompanion;}
+   /* public ArrayList<Companion> getRelatedCompanion(){return relatedCompanion;}
     public void registerToConference(){}
     public String getCompanyName() {
         return companyName;
-    }
+    }*/
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
 
-    public int getCompanyPhoneNumber() {
+    /*public int getCompanyPhoneNumber() {
         return companyPhoneNumber;
-    }
+    }*/
 
     public void setCompanyPhoneNumber(int companyPhoneNumber) {
         this.companyPhoneNumber = companyPhoneNumber;

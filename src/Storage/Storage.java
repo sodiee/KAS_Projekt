@@ -22,10 +22,10 @@ public class Storage {
         participants.add(participant);
     }
 
-    public static void removeParticipant(Participant participant) {
+    /*public static void removeParticipant(Participant participant) {
         participants.remove(participant);
     }
-
+*/
     // -------------------------------------------------------------------------
 
     public static ArrayList<Companion> getCompanion() {
@@ -36,7 +36,7 @@ public class Storage {
         companions.add(companion);
     }
 
-    public static void removeCompanion(Companion companion){companions.remove(companion);}
+  //  public static void removeCompanion(Companion companion){companions.remove(companion);}
 
     // -------------------------------------------------------------------------
 
@@ -46,7 +46,7 @@ public class Storage {
         hotels.add(hotel);
     }
 
-    public static void removeHotel(Hotel hotel) {hotels.remove(hotel);}
+   // public static void removeHotel(Hotel hotel) {hotels.remove(hotel);}
 
     // -------------------------------------------------------------------------
 
@@ -54,7 +54,7 @@ public class Storage {
 
     public static void addConference(Conference conference) {conferences.add(conference);}
 
-    public static void removeConference(Conference conference) {conferences.remove(conference);}
+  //  public static void removeConference(Conference conference) {conferences.remove(conference);}
 
     // -------------------------------------------------------------------------
 

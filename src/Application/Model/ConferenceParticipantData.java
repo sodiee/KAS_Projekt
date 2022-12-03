@@ -10,7 +10,7 @@ public class ConferenceParticipantData {
     private boolean lecturer;
     private Conference conference;
     private int daysAtConference;
-    private double totalPrice;
+    //private double totalPrice;
 
     public ConferenceParticipantData(Conference conference, Participant participant, Hotel hotel, Companion companion, boolean lecturer, int daysAtConference, ArrayList<HotelExtraChoices> hotelExtraChoices) {
         this.conference = conference;
